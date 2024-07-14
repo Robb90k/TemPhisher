@@ -9,7 +9,6 @@
 - [Contributions](#contributions)
 - [License](#license)
 - [Contact](#contact)
-- [Tool Update](#tool-upgrade)
 - [Dependencies](#dependencies)
 - [Note](#note)
 
@@ -58,6 +57,23 @@ This project is licensed under the [Apache License 2.0](LICENSE).
 ## Contact
 
 Author: [Robb90k](https://github.com/Robb90k)  
+
+## Dependencies
+
+It is necessary to have the following tools and dependencies installed:
+
+### Python Dependencies
+
+Python Libraries:
+- argparse
+- flask
+
+### External Tools
+- **Localtunnel**:
+  - Localtunnel must be installed and configured with:
+    ````bash
+    npm install -g localtunnel
+    ````
 
 ## Note
 
