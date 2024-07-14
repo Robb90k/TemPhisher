@@ -1,4 +1,4 @@
-# TempPhisher
+# TemPhisher
 
 ## Table of Contents
 
@@ -39,10 +39,9 @@ Follow the on-screen instructions to provide the necessary information.
 
 ## Features
 
-- Automatic generation of payloads with msfvenom.
-- Insertion of payloads in legitimate APKs.
-- Automated configuration of Ngrok.
-- Automated Metasploit configuration.
+- Allows creating a fake login page to capture credentials and demonstrate the security risks associated with phishing attacks.
+- At the moment there is only one template: Instagram
+- But I plan to add more templates
 
 ## Contributions
 
