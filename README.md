@@ -67,13 +67,7 @@ It is necessary to have the following tools and dependencies installed:
 Python Libraries:
 - argparse
 - flask
-
-### External Tools
-- **Localtunnel**:
-  - Localtunnel must be installed and configured with:
-    ````bash
-    npm install -g localtunnel
-    ````
+- pyngrok
 
 ## Note
 
