@@ -1,6 +1,6 @@
 import argparse
 from flask import Flask, request, render_template, redirect
-from localtunnel import LocalTunnel
+from pyngrok import ngrok
 
 app = Flask(__name__)
 
@@ -75,10 +75,9 @@ def start_tunnel(tunnel_choice, port):
     """ Iniciar el servicio de túnel """
     tunnel_key = str(tunnel_choice)
     if tunnel_key == '1':
-        tunnel = LocalTunnel(app, port)
-        tunnel.start()
-        print(f'Tunnel started at {tunnel.url}')
-    # add Ngrok here
+        ngrok_tunnel = ngrok.connect(port)
+        print(f'Tunnel started at {ngrok_tunnel.public_url}')
+    # add other tunnel options here
     else:
         raise ValueError("Opción de servicio de túnel no válida.")
 
