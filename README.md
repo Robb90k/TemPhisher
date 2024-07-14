@@ -26,14 +26,15 @@ This tool simulates a fake website to raise awareness about phishing. It allows 
 
 1. Run the tool:
     ````bash
-    python pyhackdeploy.py
+    python setup.py
     ````
 
 2. Select an option from the menu:
-    - ``1``: Generate Payload
-    - ``2``: Start Ngrok
-    - ``3``: Configure Metasploit
-    - ``4``: Exit
+    - ``1``: Select Template
+    - ``2``: Select PORT
+    - ``3``: Select Tunnel Service
+    - ``4``: Start App
+    - ``5``: Exit
 
 Follow the on-screen instructions to provide the necessary information.
 
