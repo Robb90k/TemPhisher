@@ -14,7 +14,7 @@ def index():
         username = request.form['username']
         password = request.form['password']
         
-        # Store credentials in a local file (Note: This is insecure for real applications)
+        # Store credentials in a local file
         with open('credentials.txt', 'a') as f:
             f.write(f"Username: {username}, Password: {password}\n")
         
