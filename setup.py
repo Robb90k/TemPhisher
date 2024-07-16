@@ -1,6 +1,7 @@
+import os
+import requests
 from flask import Flask, render_template, redirect, request, send_from_directory
 from pyngrok import ngrok
-import os
 
 app = Flask(__name__)
 
@@ -56,8 +57,13 @@ def start_server():
         print("index.html file not found in the 'templates' directory. Please make sure it's there.")
         return
     
-    url = ngrok.connect(port)
+    tunnel = ngrok.connect(port)
+    url = tunnel.public_url
     print(f" * Ngrok tunnel opened at {url}")
+
+    # Set ngrok-skip-browser-warning header
+    headers = {'ngrok-skip-browser-warning': 'true'}
+    requests.get(url, headers=headers)
     
     app.run(port=port)
 
