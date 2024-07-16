@@ -1,12 +1,9 @@
 import os
 import requests
 from flask import Flask, render_template, redirect, request, send_from_directory
-from flask_lt import run_with_lt
+from pyngrok import ngrok
 
 app = Flask(__name__)
-
-def run_with_custom_lt(app, subdomain):
-    run_with_lt(app, subdomain=subdomain)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -60,22 +57,19 @@ def start_server():
         print("Invalid port number. Please enter a valid integer.")
         return
     
-    subdomain = input("Enter the desired subdomain for LocalTunnel (or leave blank for a random subdomain): ")
-    
+    subdomain = input("Enter the desired subdomain for ngrok (or leave blank for a random subdomain): ")
+
     if not os.path.exists('templates/index.html'):
         print("index.html file not found in the 'templates' directory. Please make sure it's there.")
         return
     
-    # Set up the LocalTunnel with the specified subdomain
-    run_with_custom_lt(app, subdomain)
+    # Start ngrok tunnel
+    if subdomain:
+        public_url = ngrok.connect(port, subdomain=subdomain)
+    else:
+        public_url = ngrok.connect(port)
     
-    # Get the LocalTunnel URL
-    lt_url = f"https://{subdomain}.loca.lt" if subdomain else "https://random-subdomain.loca.lt"
-    print(f" * LocalTunnel opened at {lt_url}")
-
-    # Bypass the LocalTunnel page
-    headers = {'bypass-tunnel-reminder': 'true'}
-    requests.get(lt_url, headers=headers)
+    print(f" * ngrok tunnel opened at {public_url}")
     
     app.run(port=port)
 
