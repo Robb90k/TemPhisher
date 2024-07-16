@@ -41,7 +41,6 @@ def get_tunnel_choice():
     return choice
 
 def load_config(template_choice):
-    """ Cargar la configuración de la aplicación """
     template_key = str(template_choice)
     if template_key == '1':
         app.config['TEMPLATE'] = 'index.html'
@@ -51,7 +50,6 @@ def load_config(template_choice):
         raise ValueError("Opción de template no válida.")
 
 def create_app():
-    """ Crear la aplicación Flask """
     @app.route('/', methods=['GET', 'POST'])
     def index():
         if request.method == 'POST':
@@ -68,7 +66,6 @@ def create_app():
         return render_template(app.config['TEMPLATE'])
 
 def start_tunnel(tunnel_choice, port):
-    """ Iniciar el servicio de túnel """
     tunnel_key = str(tunnel_choice)
     if tunnel_key == '1':
         ngrok_tunnel = ngrok.connect(port)
@@ -78,7 +75,6 @@ def start_tunnel(tunnel_choice, port):
         raise ValueError("Opción de servicio de túnel no válida.")
 
 def main():
-    """ Función principal """
     template_choice = None
     port = None
     tunnel_choice = None
